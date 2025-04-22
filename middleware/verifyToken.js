@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { prisma } from "../utils/prismaClient.js"; // Adjust path as necessary
+import { prisma } from "../DB/db.config.js"; // Adjust path as necessary
 
 // Middleware to verify token and role
 const verifyRole = (requiredRole) => {
