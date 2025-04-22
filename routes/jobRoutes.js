@@ -1,5 +1,4 @@
 import express from "express";
-import verifyToken from "../middleware/verifyToken.js";
 import AdminRole from "../middleware/AdminRole.js";
 import {
   createJob,
@@ -11,7 +10,7 @@ import {
 
 const jobRoute = express.Router();
 
-// Public route to fetch all jobs (authentication not required)
+// Public route to fetch all jobs
 jobRoute.get("/all", fetchJobs);
 
 // Admin-only route to create a job
