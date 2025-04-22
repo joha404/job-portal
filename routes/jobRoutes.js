@@ -17,8 +17,8 @@ jobRoute.get("/all", fetchJobs);
 // Admin-only route to create a job
 jobRoute.post("/create", AdminRole, createJob);
 
-// Public route to view a job by ID (authentication required)
-jobRoute.get("/:id", verifyToken, showJob);
+// Public route to view a job by ID
+jobRoute.get("/:id", showJob);
 
 // Admin-only route to update a job
 jobRoute.put("/update/:id", AdminRole, updateJob);
