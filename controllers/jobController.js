@@ -18,7 +18,7 @@ export const fetchJobs = async (req, res) => {
 
     return res.status(200).json({ status: 200, data: jobs });
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.error("Error fetching Jobs:", error);
     return res
       .status(500)
       .json({ status: 500, message: "Internal Server Error" });
@@ -40,7 +40,7 @@ export const createJob = async (req, res) => {
       location,
     },
   });
-  return res.json({ status: 200, data: newjob, msg: "User created." });
+  return res.json({ status: 200, data: newjob, msg: "Job created." });
 };
 
 // * Show user
@@ -76,7 +76,7 @@ export const updateJob = async (req, res) => {
     },
   });
 
-  return res.json({ status: 200, message: "User updated successfully" });
+  return res.json({ status: 200, message: "Job updated successfully" });
 };
 
 // * Delete user
@@ -88,5 +88,5 @@ export const deleteJob = async (req, res) => {
     },
   });
 
-  return res.json({ status: 200, msg: "User deleted successfully" });
+  return res.json({ status: 200, msg: "Job deleted successfully" });
 };

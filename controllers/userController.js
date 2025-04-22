@@ -99,30 +99,36 @@ export const LoginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Find the user by email
     const user = await prisma.user.findUnique({
       where: { email },
     });
 
     if (!user) {
       return res.status(400).json({
-        message: "Invalid credentials",
+        message: "User not found, invalid credentials.",
       });
     }
 
+    // Check if password matches
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res
+        .status(400)
+        .json({ message: "Incorrect password, please try again." });
     }
 
+    // Create JWT token
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "72h",
+      expiresIn: "72h", // Token will expire in 72 hours
     });
 
+    // Set the token in cookies
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 72 * 60 * 60 * 1000, // 72 hours
+      secure: process.env.NODE_ENV === "production", // Use secure cookies only in production
+      sameSite: "strict", // CSRF protection
+      maxAge: 72 * 60 * 60 * 1000, // Cookie expires in 72 hours
     });
 
     res.status(200).json({ message: "Login successful", token });
@@ -131,6 +137,7 @@ export const LoginUser = async (req, res) => {
     res.status(500).json({ message: "Error logging in", error: err.message });
   }
 };
+
 export const logoutUser = (req, res) => {
   try {
     res.clearCookie("token", {
