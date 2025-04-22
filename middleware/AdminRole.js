@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 // middleware/verifyToken.js
-import { prisma } from "../DB/db.config.js"; // Correct the path to match your file structure
+import prisma from "../DB/db.config.js";
 
 // Middleware to check if user has Admin role
 const checkAdminRole = async (req, res, next) => {
