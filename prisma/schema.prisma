@@ -1,3 +1,5 @@
+// middleware/verifyToken.js
+
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearchPostgres"]

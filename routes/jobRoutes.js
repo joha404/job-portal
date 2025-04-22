@@ -1,4 +1,6 @@
 import express from "express";
+import verifyToken from "../middleware/verifyToken.js";
+import AdminRole from "../middleware/AdminRole.js";
 import {
   createJob,
   deleteJob,
@@ -7,12 +9,21 @@ import {
   updateJob,
 } from "../controllers/jobController.js";
 
-const jobRote = express.Router();
+const jobRoute = express.Router();
 
-jobRote.get("/all", fetchJobs);
-jobRote.post("/create", createJob);
-jobRote.get("/:id", showJob);
-jobRote.put("/update/:id", updateJob);
-jobRote.delete("/delete/:id", deleteJob);
+// Public route to fetch all jobs (authentication not required)
+jobRoute.get("/all", fetchJobs);
 
-export default jobRote;
+// Admin-only route to create a job
+jobRoute.post("/create", AdminRole, createJob);
+
+// Public route to view a job by ID (authentication required)
+jobRoute.get("/:id", verifyToken, showJob);
+
+// Admin-only route to update a job
+jobRoute.put("/update/:id", AdminRole, updateJob);
+
+// Admin-only route to delete a job
+jobRoute.delete("/delete/:id", AdminRole, deleteJob);
+
+export default jobRoute;
